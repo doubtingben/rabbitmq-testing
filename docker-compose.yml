@@ -1,0 +1,52 @@
+version: '2'
+
+services:
+  rabbit1:
+    image: rabbitmq:3
+    hostname: rabbit1
+    volumes:
+      - ./rabbit1:/var/lib/rabbitmq
+      - ./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+      - ./enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+    ports:
+      - "127.0.0.1:8081:15672"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: secretcookiehere
+    networks: 
+      rabbits:
+        ipv4_address: 172.21.21.11
+  rabbit2:
+    image: rabbitmq:3
+    hostname: rabbit2
+    volumes:
+      - ./rabbit2:/var/lib/rabbitmq
+      - ./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+      - ./enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+    ports:
+      - "127.0.0.1:8082:15672"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: secretcookiehere
+    networks: 
+      rabbits:
+        ipv4_address: 172.21.21.12
+  rabbit3:
+    image: rabbitmq:3
+    hostname: rabbit3
+    volumes:
+      - ./rabbit3:/var/lib/rabbitmq
+      - ./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+      - ./enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+    ports:
+      - "127.0.0.1:8083:15672"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: secretcookiehere
+    networks: 
+      rabbits:
+        ipv4_address: 172.21.21.13
+
+networks:
+  rabbits:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.21.0/24

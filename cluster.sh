@@ -1,0 +1,6 @@
+docker exec rabbitmqtesting_rabbit2_1 rabbitmqctl stop_app
+docker exec rabbitmqtesting_rabbit3_1 rabbitmqctl stop_app
+docker exec rabbitmqtesting_rabbit2_1 rabbitmqctl join_cluster rabbit@rabbit1
+docker exec rabbitmqtesting_rabbit3_1 rabbitmqctl join_cluster rabbit@rabbit1
+docker exec rabbitmqtesting_rabbit2_1 rabbitmqctl start_app
+docker exec rabbitmqtesting_rabbit3_1 rabbitmqctl start_app
